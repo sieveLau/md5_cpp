@@ -60,3 +60,13 @@ TEST(MD5, RawArray_Equal)
     auto md5 = sieve::hash::md5(origin, 5);
     EXPECT_EQ(std::string("8b1a9953c4611296a827abf8c47804d7"), sieve::util::to_hex(md5));
 }
+
+TEST(MD5Class, digest_Equal)
+{
+    std::string str("Hello");
+    auto md5 = sieve::hash::md5(str);
+    sieve::hash::MD5 md5c;
+    md5c.update(str);
+    auto classmd5 = md5c.digest();
+    EXPECT_TRUE(0==std::memcmp(md5.data(),classmd5.data(),md5.size()));
+}
