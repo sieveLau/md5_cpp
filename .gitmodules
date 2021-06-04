@@ -1,0 +1,6 @@
+[submodule "external/base64"]
+	path = external/base64
+	url = https://github.com/sieveLau/base64_cpp.git
+[submodule "external/util"]
+	path = external/util
+	url = https://github.com/sieveLau/cpp_util.git
