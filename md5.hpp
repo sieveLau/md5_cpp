@@ -24,12 +24,10 @@ auto md5(const unsigned char (&bytes)[N], bool include_string_terminator = false
     return result;
 }
 
-auto md5(const std::string& str)
-{
-    std::array<unsigned char, MD5_DIGEST_LENGTH> result;
-    MD5(reinterpret_cast<const unsigned  char*>(str.c_str()),str.size(),result.data());
-    return result;
-}
+
+std::array<unsigned char, MD5_DIGEST_LENGTH> md5(const unsigned char *bytes, size_t bytes_to_cal);
+
+std::array<unsigned char, MD5_DIGEST_LENGTH> md5(const std::string &str);
 
 }
 }

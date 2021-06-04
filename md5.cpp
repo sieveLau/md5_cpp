@@ -1,27 +1,15 @@
-#include <cstdio>
-#include <openssl/md5.h>
-#include "../base64/base64.hpp"
-#include <memory>
-#include <vector>
-#include <array>
-// #include <iomanip>
-// #include <iostream>
-// #include <sstream>
-//
-// int main(int argc,char** argv)
-// {
-//     unsigned char string[] = "Hello";
-//     unsigned char dest[MD5_DIGEST_LENGTH];
-//     MD5(string,sizeof(string)-1,dest);
-//     
-//     std::ostringstream sout;
-// sout<<std::hex<<std::setfill('0');
-// for(long long c: dest)
-// {
-//     sout<<std::setw(2)<<(long long)c;
-// }
-//     std::cout<<sout.str()<<std::endl;
-//     return 0;
-// }
-
 #include "md5.hpp"
+
+std::array<unsigned char, 16> sieve::hash::md5(const unsigned char *bytes, const size_t bytes_to_cal)
+{
+    std::array<unsigned char, MD5_DIGEST_LENGTH> result;
+    MD5(bytes, bytes_to_cal, result.data());
+    return result;
+}
+
+std::array<unsigned char, 16> sieve::hash::md5(const std::string &str)
+{
+    std::array<unsigned char, MD5_DIGEST_LENGTH> result;
+    MD5(reinterpret_cast<const unsigned char *>(str.c_str()), str.size(), result.data());
+    return result;
+}
