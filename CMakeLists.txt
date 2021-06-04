@@ -1,4 +1,10 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.16)
+
+if(TARGET md5cpp)
+  return()
+endif(TARGET md5cpp)
+
+
 project(md5cpp)
 
 set(CXX_STANDARD 17)
