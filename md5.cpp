@@ -29,27 +29,25 @@ MD5::MD5()
 }
 
 MD5::MD5(MD5 &&another) noexcept
-    : buffer_(nullptr), finish_(false)
+    : MD5()
 {
-    buffer_ = another.buffer_;
-    finish_ = another.finish_;
-    another.dirty_reset();
+    swap(*this,another);
 }
 
-class MD5 &MD5::operator=(MD5 &&another) noexcept
+MD5 & MD5::operator=(MD5 another)
 {
-    if (this != &another) {
-        EVP_MD_CTX_free(buffer_);
-        buffer_ = another.buffer_;
-        finish_ = another.finish_;
-        another.dirty_reset();
-    }
+    swap(*this,another);
     return *this;
 }
 
 void MD5::update(const std::string &data)
 {
     EVP_DigestUpdate(buffer_, data.c_str(), data.size());
+}
+
+void MD5::update(const unsigned char * bytes, const size_t bytes_to_cal)
+{
+    EVP_DigestUpdate(buffer_,bytes,bytes_to_cal);
 }
 
 
@@ -72,6 +70,12 @@ MD5::~MD5()
 {
     EVP_MD_CTX_free(buffer_);
     finish_ = true;
+}
+
+MD5::MD5(const MD5 &another):buffer_(nullptr),finish_(another.finish_)
+{
+    buffer_=EVP_MD_CTX_new();
+    EVP_MD_CTX_copy_ex(buffer_,another.buffer_);
 }
 
 

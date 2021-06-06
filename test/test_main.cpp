@@ -70,3 +70,22 @@ TEST(MD5Class, digest_Equal)
     auto classmd5 = md5c.digest();
     EXPECT_TRUE(0==std::memcmp(md5.data(),classmd5.data(),md5.size()));
 }
+
+TEST(MD5Class, hexdigest_Equal)
+{
+    std::string str("Hello");
+    sieve::hash::MD5 md5c;
+    md5c.update(str);
+    auto classmd5 = md5c.hexdigest();
+    EXPECT_EQ(std::string("8b1a9953c4611296a827abf8c47804d7"), classmd5);
+}
+
+TEST(MD5Class, copy_Equal)
+{
+    std::string str("Hello");
+    sieve::hash::MD5 md5c;
+    md5c.update(str);
+    sieve::hash::MD5 md5c_copy(md5c);
+    auto copyed_md5_hex = md5c_copy.hexdigest();
+    EXPECT_EQ(std::string("8b1a9953c4611296a827abf8c47804d7"), copyed_md5_hex);
+}
