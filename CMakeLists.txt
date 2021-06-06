@@ -15,8 +15,10 @@ add_subdirectory(external/util)
 find_package(OpenSSL REQUIRED)
 
 add_library(md5cpp STATIC md5.cpp md5.hpp)
-
 target_link_libraries(md5cpp base64 util OpenSSL::Crypto)
+
+add_library(md5cpp_dyn SHARED md5.cpp md5.hpp)
+target_link_libraries(md5cpp_dyn base64 util OpenSSL::Crypto)
 
 # add googletest https://google.github.io/googletest/quickstart-cmake.html
 include(FetchContent)

@@ -55,7 +55,7 @@ b64encode(md5.hexdigest())
 
 TEST(MD5, RawArray_Equal)
 {
-    unsigned char *origin = new unsigned char[]{"Hello"};
+    const unsigned char *origin = reinterpret_cast<const unsigned char*>("Hello");
     const size_t full_size = 6;
     auto md5 = sieve::hash::md5(origin, 5);
     EXPECT_EQ(std::string("8b1a9953c4611296a827abf8c47804d7"), sieve::util::to_hex(md5));
@@ -68,7 +68,7 @@ TEST(MD5Class, digest_Equal)
     sieve::hash::MD5 md5c;
     md5c.update(str);
     auto classmd5 = md5c.digest();
-    EXPECT_TRUE(0==std::memcmp(md5.data(),classmd5.data(),md5.size()));
+    EXPECT_TRUE(0==memcmp(md5.data(),classmd5.data(),md5.size()));
 }
 
 TEST(MD5Class, hexdigest_Equal)
